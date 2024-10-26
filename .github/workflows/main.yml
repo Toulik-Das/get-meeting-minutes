@@ -19,11 +19,13 @@ jobs:
           git config --global user.email "dastoulik12@gmail.com"  # Replace with your email
 
       - name: Pull latest changes from remote
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git pull https://Toulik:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/Toulik/Meeting-Minutes main || echo "No changes to pull"
+          git pull https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main
 
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main || echo "No changes to push"
+          git push https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main

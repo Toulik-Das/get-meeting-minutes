@@ -27,5 +27,4 @@ jobs:
       - name: Push changes to Hugging Face
         run: |
           git add .
-          git commit -m "Your commit message"
           git push https://Toulik:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/Toulik/Meeting-Minutes main

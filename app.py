@@ -4,7 +4,7 @@ import logging
 import streamlit as st
 from utils.extractAudio import extract_audio_from_video
 from utils.audioTranscription import audio_transcription
-from utils.lamaModelHandler import meeting_minutes_llm
+from utils.lamaModelHandlerCPU import meeting_minutes_llm
 
 LLAMA = st.secrets["LLAMA"]
 HF_TOKEN = st.secrets["HF_TOKEN"]
@@ -87,7 +87,7 @@ if uploaded_file:
     # Display video player if the file is a video format
     elif uploaded_file.type.startswith("video"):
         st.video(uploaded_file, format=uploaded_file.type)
-        
+
 if uploaded_file and api_key:
     st.write("Generating minutes... please wait 🚀")
 

@@ -22,7 +22,7 @@ def transcribe_audio(audio_buffer, openai_api_key):
         openai = OpenAI(api_key=openai_api_key)
 
         # Open the audio file for transcription
-        transcription = openai.Audio.transcriptions.create(
+        transcription = openai.audio.transcriptions.create(
             model="whisper-1",
             file=audio_buffer,  # Use the in-memory buffer directly
             response_format="text"

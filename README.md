@@ -1,4 +1,17 @@
-run # Meeting Minutes Generator
+---
+title: Meeting Minutes
+emoji: 📚
+colorFrom: blue
+colorTo: red
+sdk: streamlit
+sdk_version: 1.39.0
+app_file: app.py
+pinned: false
+license: mit
+short_description: Meeting Minutes
+---
+
+# Meeting Minutes Generator
 
 Welcome to the **Meeting Minutes Generator**, a GenAI-powered application designed to transcribe audio recordings of meetings and automatically generate concise, accurate meeting minutes.
 

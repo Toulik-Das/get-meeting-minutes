@@ -19,6 +19,7 @@ def setup_model_and_tokenizer(model_name):
         
         # Set up the model with or without quantization based on CUDA availability
         if torch.cuda.is_available():
+            logging.info("USING CUDA")
             from bitsandbytes import BitsAndBytesConfig  # Import only if CUDA is available
             quant_config = BitsAndBytesConfig(
                 load_in_4bit=True,
@@ -28,6 +29,7 @@ def setup_model_and_tokenizer(model_name):
             )
             model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", quantization_config=quant_config)
         else:
+            logging.info("USING CPU")
             model = AutoModelForCausalLM.from_pretrained(model_name)
 
         return tokenizer, model

@@ -6,8 +6,8 @@ from utils.extractAudio import extract_audio_from_video
 from utils.audioTranscription import audio_transcription
 from utils.lamaModelHandler import meeting_minutes_llm
 
-LLAMA = "meta-llama/Meta-Llama-3.1-8B-Instruct"
-HF_TOKEN = "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"
+LLAMA = st.secrets["LLAMA"]
+HF_TOKEN = st.secrets["HF_TOKEN"]
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

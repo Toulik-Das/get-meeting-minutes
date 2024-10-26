@@ -1,4 +1,4 @@
-# Meeting Minutes Generator
+run # Meeting Minutes Generator
 
 Welcome to the **Meeting Minutes Generator**, a GenAI-powered application designed to transcribe audio recordings of meetings and automatically generate concise, accurate meeting minutes.
 

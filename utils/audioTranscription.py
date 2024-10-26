@@ -1,5 +1,4 @@
 import logging
-import openai
 from openai import OpenAI
 
 # Configure logging
@@ -7,9 +6,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def set_openai_api_key(api_key):
     """Set the OpenAI API key."""
-    openai.api_key = api_key
+    # openai.api_key = api_key
 
-def transcribe_audio(audio_buffer):
+def transcribe_audio(audio_buffer, api_key):
     """Transcribe audio file to text using OpenAI's Whisper model.
 
     Args:
@@ -20,7 +19,8 @@ def transcribe_audio(audio_buffer):
     """
     try:
         logging.info(f"Starting transcription for file: {audio_buffer}")
-        
+        openai = OpenAI(api_key=api_key)
+
         # Open the audio file for transcription
         transcription = openai.Audio.transcriptions.create(
             model="whisper-1",
@@ -31,11 +31,7 @@ def transcribe_audio(audio_buffer):
         logging.info("Transcription complete.")
         
         return transcription
-        
-    except FileNotFoundError:
-        logging.error(f"Audio file not found: {audio_buffer}")
-    except openai.error.OpenAIError as e:
-        logging.error(f"OpenAI API error occurred: {e}")
+    
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
     
@@ -46,7 +42,7 @@ def audio_transcription(audio_buffer, api_key):
 
     if api_key:
         openai_config = set_openai_api_key(api_key)
-        transcription = transcribe_audio(audio_buffer)
+        transcription = transcribe_audio(audio_buffer, api_key)
         
         if transcription:
             print("Transcription Result:\n", transcription)

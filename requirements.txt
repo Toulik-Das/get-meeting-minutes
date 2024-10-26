@@ -6,3 +6,6 @@ bitsandbytes
 transformers 
 sentencepiece 
 accelerate
+moviepy
+numpy
+pandas

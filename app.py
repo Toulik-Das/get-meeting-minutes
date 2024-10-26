@@ -75,6 +75,19 @@ with st.sidebar:
 st.subheader("📁 Upload Meeting Audio/Video")
 uploaded_file = st.file_uploader("Upload an audio or video file", type=["wav", "mp3", "m4a", "mp4", "mov"])
 
+# Check if a file has been uploaded
+if uploaded_file:
+    # Display the file name
+    st.write("File uploaded successfully:", uploaded_file.name)
+    
+    # Display audio player if the file is an audio format
+    if uploaded_file.type.startswith("audio"):
+        st.audio(uploaded_file, format=uploaded_file.type)
+
+    # Display video player if the file is a video format
+    elif uploaded_file.type.startswith("video"):
+        st.video(uploaded_file, format=uploaded_file.type)
+        
 if uploaded_file and api_key:
     st.write("Generating minutes... please wait 🚀")
 

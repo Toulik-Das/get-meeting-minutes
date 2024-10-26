@@ -6,6 +6,7 @@ from utils.extractAudio import extract_audio_from_video
 from utils.audioTranscription import audio_transcription
 from utils.lamaModelHandlerCPU import meeting_minutes_llm
 
+# Vars
 LLAMA = st.secrets["LLAMA"]
 HF_TOKEN = st.secrets["HF_TOKEN"]
 

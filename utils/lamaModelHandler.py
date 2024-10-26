@@ -43,7 +43,10 @@ def generate_meeting_minutes(transcription, tokenizer, model):
     ]
     
     try:
-        inputs = tokenizer.apply_chat_template(messages, return_tensors="pt").to("cuda")
+        # Check if CUDA is available and set the device accordingly
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        inputs = tokenizer.apply_chat_template(messages, return_tensors="pt").to(device)
         streamer = TextStreamer(tokenizer)
         outputs = model.generate(inputs, max_new_tokens=2000, streamer=streamer)
 

@@ -1,7 +1,6 @@
 import logging
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer, BitsAndBytesConfig
 import torch
-from transformers import TextStreamer
 from huggingface_hub import login 
 
 def set_hugging_face_api_key(api_key):
@@ -34,7 +33,9 @@ def setup_model_and_tokenizer(model_name):
 
 def generate_meeting_minutes(transcription, tokenizer, model):
     """Generate meeting minutes from transcription."""
+    
     system_message = "You are an assistant that produces minutes of meetings from transcripts, with summary, key discussion points, takeaways, and action items with owners, in markdown."
+    
     user_prompt = f"Below is an extract transcript of a Enterprise Data Cataloging and Marketplace teams meeting. Please write minutes in markdown, including a summary with attendees, location, and date; discussion points; takeaways; and action items with owners.\n{transcription}"
 
     messages = [
@@ -50,13 +51,10 @@ def generate_meeting_minutes(transcription, tokenizer, model):
         streamer = TextStreamer(tokenizer)
         outputs = model.generate(inputs, max_new_tokens=2000, streamer=streamer)
 
-        #Stream Output
+        # Stream Output
         for output in outputs:
             response = tokenizer.decode(output, skip_special_tokens=True)
             yield response  # Yield the intermediate output
-
-        # response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        # return response
 
     except Exception as e:
         logging.error(f"Error during generation: {e}")
@@ -73,5 +71,7 @@ def meeting_minutes_llm(transcription, LLAMA_MODEL, api_key):
     tokenizer, model = setup_model_and_tokenizer(LLAMA_MODEL)
 
     # Generate minutes
-    for mom in generate_meeting_minutes(transcription, tokenizer, model):
-        yield mom  # Yield each portion of generated text
+    minutes_generator = generate_meeting_minutes(transcription, tokenizer, model)
+    
+    for minutes in minutes_generator:
+        yield minutes  # Yield each portion of generated text

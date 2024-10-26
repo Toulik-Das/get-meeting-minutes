@@ -34,12 +34,9 @@ def setup_model_and_tokenizer(model_name):
 def generate_meeting_minutes(transcription, tokenizer, model):
     """Generate meeting minutes from transcription."""
     
-    system_message = ("You are an assistant that produces minutes of meetings from transcripts, "
-                      "with summary, key discussion points, takeaways, and action items with owners, in markdown.")
+    system_message = "You are an assistant that produces minutes of meetings from transcripts, with summary, key discussion points, takeaways, and action items with owners, in markdown."
     
-    user_prompt = (f"Below is an extract transcript of a Enterprise Data Cataloging and Marketplace teams meeting. "
-                   f"Please write minutes in markdown, including a summary with attendees, location, and date; "
-                   f"discussion points; takeaways; and action items with owners.\n{transcription}")
+    user_prompt = f"Below is an extract transcript of a Enterprise Data Cataloging and Marketplace teams meeting. Please write minutes in markdown, including a summary with attendees, location, and date; discussion points; takeaways; and action items with owners.\n{transcription}"
 
     messages = [
         {"role": "system", "content": system_message},

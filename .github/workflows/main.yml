@@ -1,31 +1,35 @@
-name: Sync to Hugging Face hub
+name: Deploy to Hugging Face
+
 on:
   push:
-    branches: [main]
-  workflow_dispatch:  # to run this workflow manually from the Actions tab
+    branches:
+      - main
 
 jobs:
-  sync-to-hub:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          fetch-depth: 0
-          lfs: true
-      
-      - name: Set up Git configuration
+          python-version: '3.x'
+
+      - name: Install dependencies
         run: |
-          git config --global user.name "Toulik-Das"
-          git config --global user.email "dastoulik12@gmail.com"  # Replace with your email
+          pip install -r requirements.txt
 
       - name: Pull latest changes from remote
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git pull https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main
+          git config --global user.name "Toulik-Das"
+          git config --global user.email "dastoulik12@gmail.com"
+          git pull --no-rebase https://Toulik:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/Toulik/Meeting-Minutes main || true
 
-      - name: Push to hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      - name: Push changes to Hugging Face
         run: |
-          git push https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main
+          git add .
+          git commit -m "Your commit message" || echo "No changes to commit"
+          git push https://Toulik:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/Toulik/Meeting-Minutes main

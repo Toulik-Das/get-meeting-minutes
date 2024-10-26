@@ -2,9 +2,7 @@ name: Sync to Hugging Face hub
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch:  # to run this workflow manually from the Actions tab
 
 jobs:
   sync-to-hub:
@@ -14,7 +12,18 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+      
+      - name: Set up Git configuration
+        run: |
+          git config --global user.name "Toulik-Das"
+          git config --global user.email "dastoulik12@gmail.com"  # Replace with your email
+
+      - name: Pull latest changes from remote
+        run: |
+          git pull https://Toulik:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/Toulik/Meeting-Minutes main || echo "No changes to pull"
+
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://Toulik:$HF_TOKEN@huggingface.co/spaces/Toulik/Meeting-Minutes main
+        run: |
+          git push https://Toulik:${HF_TOKEN}@huggingface.co/spaces/Toulik/Meeting-Minutes main || echo "No changes to push"

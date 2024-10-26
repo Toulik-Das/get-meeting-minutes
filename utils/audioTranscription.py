@@ -8,7 +8,7 @@ def set_openai_api_key(api_key):
     """Set the OpenAI API key."""
     # openai.api_key = api_key
 
-def transcribe_audio(audio_buffer, api_key):
+def transcribe_audio(audio_buffer, openai_api_key):
     """Transcribe audio file to text using OpenAI's Whisper model.
 
     Args:
@@ -19,7 +19,7 @@ def transcribe_audio(audio_buffer, api_key):
     """
     try:
         logging.info(f"Starting transcription for file: {audio_buffer}")
-        openai = OpenAI(api_key=api_key)
+        openai = OpenAI(api_key=openai_api_key)
 
         # Open the audio file for transcription
         transcription = openai.Audio.transcriptions.create(
@@ -37,17 +37,17 @@ def transcribe_audio(audio_buffer, api_key):
     
     return None
 
-def audio_transcription(audio_buffer, api_key):
+def audio_transcription(audio_buffer, openai_api_key):
     """Main function to handle transcription."""
 
-    if api_key:
-        openai_config = set_openai_api_key(api_key)
-        transcription = transcribe_audio(audio_buffer, api_key)
+    if openai_api_key:
+        openai_config = set_openai_api_key(openai_api_key)
+        transcription = transcribe_audio(audio_buffer, openai_api_key)
         
         if transcription:
-            print("Transcription Result:\n", transcription)
+            logging.info(f"Transcription Result: {transcription}")
         else:
-            print("Transcription failed.")
+            logging.info("Transcription failed.")
         
         return transcription
     else:

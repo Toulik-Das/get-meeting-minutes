@@ -1,2 +1,8 @@
 streamlit
 openai
+requests 
+torch 
+bitsandbytes 
+transformers 
+sentencepiece 
+accelerate

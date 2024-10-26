@@ -8,4 +8,4 @@ sentencepiece
 accelerate
 moviepy
 numpy
-json
+requests
